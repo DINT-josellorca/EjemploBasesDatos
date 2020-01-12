@@ -1,0 +1,53 @@
+﻿<Window x:Class="EjemploBasesDatos.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:EjemploBasesDatos"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <TabControl>
+        <TabItem Header="ListBox">
+            <ListBox Name="ListaListBox" ItemsSource="{Binding}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock>
+                            <Run Text="{Binding Path=id}"></Run>
+                            <Run Text=" - "></Run>
+                            <Run Text="{Binding Path=nombre}"></Run>
+                        </TextBlock>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </TabItem>
+        <TabItem Header="Insertar">
+            <StackPanel Name="InsertarStackPanel" Orientation="Vertical">
+                <Label Margin="20,10,0,0">Identificador</Label>
+                <TextBox Margin="20,0" Text="{Binding Path=id}"></TextBox>
+                <Label Margin="20,10,0,0">Nombre</Label>
+                <TextBox Margin="20,0" Text="{Binding Path=nombre}"></TextBox>
+                <Label Margin="20,10,0,0">Apellido</Label>
+                <TextBox Margin="20,0" Text="{Binding Path=apellido}"></TextBox>
+                <Button Name="InsertarButton" Margin="20" Width="100px" HorizontalAlignment="Left" Click="InsertarButton_Click">Insertar</Button>
+            </StackPanel> 
+        </TabItem>
+        <TabItem Header="Eliminar">
+            <StackPanel>
+                <ComboBox Name="IdComboBox" Margin="20px" Width="300px" HorizontalAlignment="Left" ItemsSource="{Binding}" DisplayMemberPath="id"></ComboBox>
+                <Button Name="EliminarButton" Margin="20px" Width="100px" HorizontalAlignment="Left" Click="EliminarButton_Click">Eliminar</Button>
+            </StackPanel>
+        </TabItem>
+        <TabItem Header="Modificar">
+            <StackPanel Orientation="Vertical">
+                <ComboBox Name="IdModificarComboBox" Margin="20px" Width="300px" HorizontalAlignment="Left" ItemsSource="{Binding}" DisplayMemberPath="id"></ComboBox>
+                <Label Margin="20,10,0,0">Identificador</Label>
+                <TextBox Margin="20,0" Text="{Binding ElementName=IdModificarComboBox,Path=SelectedValue.id}"></TextBox>
+                <Label Margin="20,10,0,0">Nombre</Label>
+                <TextBox Name="NombreTextBox" Margin="20,0" Text="{Binding ElementName=IdModificarComboBox,Path=SelectedValue.nombre}"></TextBox>
+                <Label Margin="20,10,0,0">Apellido</Label>
+                <TextBox Name="ApellidoTextBox" Margin="20,0" Text="{Binding ElementName=IdModificarComboBox,Path=SelectedValue.apellido}"></TextBox>
+                <Button Name="ModificarButton" Margin="20px" Width="100px" HorizontalAlignment="Left" Click="ModificarButton_Click">Modificar</Button>
+            </StackPanel>
+        </TabItem>
+    </TabControl>
+</Window>
