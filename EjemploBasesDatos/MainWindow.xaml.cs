@@ -70,11 +70,8 @@ namespace EjemploBasesDatos
         private void ModificarButton_Click(object sender, RoutedEventArgs e)
         {
             CLIENTE cliente2 = (CLIENTE)IdModificarComboBox.SelectedItem;
-            contexto.CLIENTES.Remove(cliente2);
-            contexto.SaveChanges();
             cliente2.nombre = NombreTextBox.Text;
             cliente2.apellido = ApellidoTextBox.Text;
-            contexto.CLIENTES.Add(cliente2);
             contexto.SaveChanges();
         }
     }
