@@ -24,13 +24,14 @@ namespace EjemploBasesDatos
     {
         private CLIENTE cliente;
         private Informes contexto;
+        CollectionViewSource vista;
         public MainWindow()
         {
             InitializeComponent();
             cliente = new CLIENTE();
             InsertarStackPanel.DataContext = cliente;
             contexto = new Informes();
-            contexto.CLIENTES.Load();
+            contexto.CLIENTES.Include(CLIENTE=> CLIENTE.PEDIDOS).Load();
             //ListaListBox.DataContext = tema_6Entities.CLIENTES.Local;
             var consulta = from n in contexto.CLIENTES
                            where n.genero == "Male"
@@ -39,7 +40,11 @@ namespace EjemploBasesDatos
             ListaListBox.DataContext = contexto.CLIENTES.Local;
             IdComboBox.DataContext = contexto.CLIENTES.Local;
             IdModificarComboBox.DataContext = contexto.CLIENTES.Local;
-
+            TablaDataGrid.DataContext = contexto.CLIENTES.Local;
+            vista = new CollectionViewSource();
+            vista.Source = contexto.CLIENTES.Local;
+            vista.Filter += Vista_Filter;
+            TablaFiltradaDataGrid.DataContext = vista;
         }
 
         private void InsertarButton_Click(object sender, RoutedEventArgs e)
@@ -73,6 +78,29 @@ namespace EjemploBasesDatos
             cliente2.nombre = NombreTextBox.Text;
             cliente2.apellido = ApellidoTextBox.Text;
             contexto.SaveChanges();
+        }
+
+        private void ActualizarButton_Click(object sender, RoutedEventArgs e)
+        {
+            contexto.SaveChanges();
+        }
+
+        private void Vista_Filter(object sender, FilterEventArgs e)
+        {
+            CLIENTE item = (CLIENTE)e.Item;
+            if (FiltroTextBox.Text == "")
+            {
+                e.Accepted = true;
+            }
+            else
+            {
+                e.Accepted = item.nombre.Contains(FiltroTextBox.Text);
+            }
+        }
+
+        private void FiltrarButton_Click(object sender, RoutedEventArgs e)
+        {
+            vista.View.Refresh();
         }
     }
 }

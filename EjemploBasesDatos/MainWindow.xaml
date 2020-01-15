@@ -49,5 +49,43 @@
                 <Button Name="ModificarButton" Margin="20px" Width="100px" HorizontalAlignment="Left" Click="ModificarButton_Click">Modificar</Button>
             </StackPanel>
         </TabItem>
+        <TabItem Header="DataGrid">
+            <DockPanel>
+                <Button Name="ActualizarButton" DockPanel.Dock="Bottom" Width="100px" HorizontalAlignment="Left" Margin="0,10,10,0" Click="ActualizarButton_Click">Actualizar</Button>
+                <DataGrid Name="TablaDataGrid" ItemsSource="{Binding}" AutoGenerateColumns="False">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Width="1*" Header="Identificador" Binding="{Binding id}"/>
+                        <DataGridTextColumn Width="3*" Header="Nombre" Binding="{Binding nombre}"/>
+                        <DataGridTextColumn Width="3*" Header="Apellido" Binding="{Binding apellido}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </DockPanel>
+
+        </TabItem>
+        <TabItem Header="Filtrar">
+            <DockPanel>
+                <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+                    <TextBlock Text="Nombre: "></TextBlock>
+                    <TextBox Name="FiltroTextBox" Margin="20,0" Width="200px"></TextBox>
+                    <Button Name="FiltrarButton" Width="100px" Click="FiltrarButton_Click">Filtrar</Button>
+                </StackPanel>
+                <DataGrid Margin="0,10,0,0" ItemsSource="{Binding}" Name="TablaFiltradaDataGrid" AutoGenerateColumns="False" CanUserDeleteRows="False" CanUserAddRows="False">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn IsReadOnly="True" Width="1*" Header="Identificador" Binding="{Binding id}"/>
+                        <DataGridTemplateColumn Width="4*" Header="Nombre Completo">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock>
+                                        <Run Text="{Binding nombre}"></Run>
+                                        <Run Text="{Binding apellido}"></Run>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTextColumn Header="Nº Pedidos" IsReadOnly="True" Binding="{Binding PEDIDOS.Count}" Width="2*"></DataGridTextColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </DockPanel>
+        </TabItem>
     </TabControl>
 </Window>
